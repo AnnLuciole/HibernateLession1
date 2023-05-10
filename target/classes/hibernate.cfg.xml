@@ -1,0 +1,29 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!--Адрес класса драйвера-->
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <!--URL базы данных (здесь она крутится на localhost, на самом компьютере)-->
+        <property name="connection.url">jdbc:postgresql://localhost:5432/postgres</property>
+        <!--Логин и пароль базы данных-->
+        <property name="connection.username">postgres</property>
+        <property name="connection.password">6952Sql</property>
+        <!--Размер пула подключений-->
+        <property name="connection.pool_size">1</property>
+        <!--Установка автокоммита-->
+        <property name="connection.autocommit">true</property>
+        <!--Диалект SQL, на котором будут отправляться запросы-->
+        <property name="dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <!--Будут ли показываться SQL запросы-->
+        <property name="show_sql">true</property>
+        <!--В каком случае будет создаваться новая сессия (в данном случае новая сессия для каждого потока)-->
+        <property name="current_session_context_class">thread</property>
+        <!--Автоматическая генерация таблиц по размеченным классам (при dropcreate таблицы будут создаваться
+        в начале и удаляться при завершении; при update сущ-ие табл. пров-ся на соответствие - меняет таблицу
+        при несоответствии; при create таблицы удаляются при запуске, если были; при validate таблицы проверяются
+        на соответствие - выбрасывает ошибку при несоответствии)-->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+    </session-factory>
+</hibernate-configuration>
