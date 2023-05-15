@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ProductService {
 
-    private ProductDAO productDAO = new ProductDAOImpl();
+    private final ProductDAO productDAO = new ProductDAOImpl();
 
     public void addProduct(Product product){
         productDAO.add(product);

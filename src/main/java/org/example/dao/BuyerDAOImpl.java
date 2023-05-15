@@ -2,11 +2,11 @@ package org.example.dao;
 
 import org.example.entity.Buyer;
 import org.example.entity.Product;
+import org.example.entity.Purchase;
 import org.example.service.HibernateSessionFactoryUtil;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class BuyerDAOImpl implements BuyerDAO{
@@ -48,9 +48,6 @@ public class BuyerDAOImpl implements BuyerDAO{
         finally {
             session.close();
         }
-        if (buyer == null){
-            return null;
-        }
         return buyer;
     }
 
@@ -84,10 +81,10 @@ public class BuyerDAOImpl implements BuyerDAO{
         }
         session = HibernateSessionFactoryUtil.getSessionFactory().getCurrentSession();
         Transaction transaction = null;
-        List<Product> allProducts = new ArrayList<>();
+        List<Product> allProducts = null;
         try {
             transaction = session.beginTransaction();
-            allProducts = buyer.getAllProducts();
+            allProducts = buyer.getAllPurchases().stream().map(Purchase::getProduct).toList();
             transaction.commit();
         } catch (Exception e) {
             if (transaction != null) transaction.rollback();
@@ -95,9 +92,6 @@ public class BuyerDAOImpl implements BuyerDAO{
         }
         finally {
             session.close();
-        }
-        if(allProducts.isEmpty()){
-            return null;
         }
         return allProducts;
     }

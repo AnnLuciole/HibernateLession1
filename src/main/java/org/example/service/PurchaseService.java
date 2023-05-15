@@ -5,7 +5,7 @@ import org.example.dao.PurchaseDAOImpl;
 
 public class PurchaseService {
 
-    private PurchaseDAO purchaseDAO = new PurchaseDAOImpl();
+    private final PurchaseDAO purchaseDAO = new PurchaseDAOImpl();
 
     public String buyProduct(String buyerName, String productTitle) {
         return purchaseDAO.buy(buyerName, productTitle);

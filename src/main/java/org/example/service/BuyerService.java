@@ -8,7 +8,7 @@ import org.example.entity.Product;
 import java.util.List;
 
 public class BuyerService {
-    private BuyerDAO buyerDAO = new BuyerDAOImpl();
+    private final BuyerDAO buyerDAO = new BuyerDAOImpl();
 
     public void addBuyer(Buyer buyer){
         buyerDAO.add(buyer);

@@ -2,6 +2,7 @@ package org.example.service;
 
 import org.example.entity.Buyer;
 import org.example.entity.Product;
+import org.example.entity.Purchase;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
@@ -24,6 +25,8 @@ public class HibernateSessionFactoryUtil {
                         configure("hibernate.cfg.xml").
                         addAnnotatedClass(Buyer.class).
                         addAnnotatedClass(Product.class).
+                        addAnnotatedClass(Purchase.class).
+                        addAnnotatedClass(Purchase.MyId.class).
                         buildSessionFactory();
             } catch (Exception e) {
                 System.out.println("Исключение!" + e);
@@ -66,8 +69,12 @@ public class HibernateSessionFactoryUtil {
         List<Product> allProducts = HibernateSessionFactoryUtil.
                 getBuyerService().
                 getAllProducts(buyerName);
-        for (Product p:allProducts) {
-            System.out.println(p);
+        if(allProducts.isEmpty()){
+            System.out.println("Покупатель еще не совершал покупок.");
+        } else {
+            for (Product p : allProducts) {
+                System.out.println(p);
+            }
         }
     }
 
@@ -75,14 +82,22 @@ public class HibernateSessionFactoryUtil {
         List<Buyer> allBuyers = HibernateSessionFactoryUtil.
                 getProductService().
                 getAllBuyers(productTitle);
-        for (Buyer b:allBuyers) {
-            System.out.println(b);
+        if(allBuyers.isEmpty()){
+            System.out.println("Покупатель еще не совершал покупок.");
+        } else {
+            for (Buyer b : allBuyers) {
+                System.out.println(b);
+            }
         }
     }
 
     public static void removeBuyer(String name) {
         Buyer buyer = HibernateSessionFactoryUtil.getBuyerService().removeBuyer(name);
-        System.out.println(buyer + " удален.");
+        if(buyer == null) {
+            System.out.println("Такого покупателя нет в таблице");
+        } else {
+            System.out.println(buyer + " удален.");
+        }
     }
 
     public static void removeProduct(String title) {
